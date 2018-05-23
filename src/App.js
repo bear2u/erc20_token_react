@@ -17,10 +17,10 @@ class App extends Component {
 
   async componentWillMount() {
 
-    const React = require('react');
+    // const React = require('react');
 
-    //It should be 16.3.2
-    console.log(React.version);
+    // //It should be 16.3.2
+    // console.log(React.version);
 
     const result = await getWeb3;
     this.setState({
