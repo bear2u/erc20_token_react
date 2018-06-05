@@ -180,9 +180,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.0;\n\ncontract ERC20Interface {\n    function totalSupply() view public returns (uint256);\n\n    function balanceOf(address _owner) view public returns (uint256);\n\n    function transfer(address _to, uint256 _value) public returns (bool success);\n\n    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success);\n\n    function approve(address _spender, uint256 _value) public returns (bool success);\n\n    function allowance(address _owner, address _spender) view public returns (uint256 remaining);\n\n    event Transfer(address indexed _from, address indexed _to, uint256 _value);\n\n    event Approval(address indexed _owner, address indexed _spender, uint256 _value);\n}\n\ncontract CustomToken is ERC20Interface{\n\n    string public _symbol;\n    string public _name;\n    uint public _decimals;\n    uint256 _totalSupply;\n\n    //이 계약의 오너 저장\n    address public owner;\n\n    //각각의 계정에 저장된 잔액을 저장\n    mapping (address => uint256) balances;\n\n    //계좌 주인에서 다른 계좌로 출금되는지 승인 여부 저장하는 2중 배열형태\n    mapping(address => mapping ( address => uint256 )) allowed;\n\n    //주인만 입장하도록 승인하는 함수\n    modifier onlyOwner() {\n        require(msg.sender == owner);\n        _;\n    }\n\n    //초기 토큰 생성 부분\n    constructor() public{\n        //TODO 계정에 초기값 입력\n        owner = msg.sender;\n    }\n    \n    function generate(string symbol, string name, uint decimals, uint256 totalSupply) public onlyOwner{\n        _symbol = symbol;\n        _name = name;\n        _decimals = decimals;\n        _totalSupply = totalSupply;\n        \n        balances[msg.sender] = _totalSupply;\n    }\n\n    //총 수량 확인 하는 함수\n    function totalSupply() view public returns (uint256) {\n        return _totalSupply;\n    }\n\n    //주인의 계좌의 잔액 조회\n    function balanceOf(address _owner) view public returns (uint256) {\n        return balances[_owner];\n    }\n\n    //_to 에게 금액을 전송하는 함수\n    function transfer(address _to, uint256 _amount) public returns (bool success) {\n        if(\n            //전송자의 잔액이 전송할려는 금액보다 많은지 체크\n            balances[msg.sender] >= _amount\n            //전송 금액이 0보다 큰지 체크\n            && _amount > 0\n            //받는(_to) 잔액 + _amount > _to 의 잔액 보다 큰지\n            && balances[_to] + _amount > balances[_to]\n        ) {\n            //잔액을 뺀 금액을 전송자의 잔액에서 제거한다.\n            balances[msg.sender] -= _amount;\n            //받는 사람의 잔액에 전송금액을 더한다.\n            balances[_to] += _amount;\n            //transfer 이벤트 발생 처리\n            emit Transfer(msg.sender, _to, _amount);\n\n            return true;\n        }\n\n        //그리고 성공여부 리턴\n        return false;\n    }\n\n    //from -> to 토큰을 전송을 하는데 승낙이 있을 경우에만 가능하다.\n    function transferFrom(address _from, address _to, uint _amount) public returns (bool success) {\n        //TODO from 잔액이 _amount 보다 같거나 큰경우\n        //TODO 승인 금액이 _amount보다 같거나 클경우\n        //TODO _amount > 0\n        //TODO _to의 잔액 + _amount > _to 의 잔액 의 경우\n        \n        if(\n            balances[_from] >= _amount\n            && allowed[_from][_to] >= _amount\n            && _amount > 0\n            && balances[_to] + _amount > balances[_to]\n        ) {\n            //TODO _from 잔액에 _amount를 뺀다.\n            balances[_from] -= _amount;\n            //TODO allowed from, msg.sender 로부터 _amount 를 뺀다.\n            allowed[_from][_to] -= _amount;\n            //TODO _to 잔액에 _amount를 더한다.\n            balances[_to] += _amount;\n            //TODO Transfer 이벤트를 발생시킨다.\n            emit Transfer(_from, _to, _amount);\n            return true;\n        }\n\n        return false;\n    }\n\n    //승인시 이차 배열에 넣고 동작함\n    function approve(address _spender, uint256 _amount) public returns (bool success) {\n        //함수 호출하는 사람이 _spender 에게 얼마나 줄껀지 정한다.\n        allowed[msg.sender][_spender] = _amount;\n        emit Approval(msg.sender, _spender, _amount);\n        return true;\n    }\n\n    //승인 잔액 조회\n    function allowance(address _owner, address _spender) view public returns (uint remaining) {\n        return allowed[_owner][_spender];\n    }\n\n\n}",
-  "sourcePath": "/Users/bear2u/Desktop/workspaces/erc20_token_react/contracts/CustomToken.sol",
+  "sourcePath": "/home/roha/문서/workspace_dapp/contracts/CustomToken.sol",
   "ast": {
-    "absolutePath": "/Users/bear2u/Desktop/workspaces/erc20_token_react/contracts/CustomToken.sol",
+    "absolutePath": "/home/roha/문서/workspace_dapp/contracts/CustomToken.sol",
     "exportedSymbols": {
       "CustomToken": [
         339
@@ -4415,7 +4415,7 @@
     "src": "0:4583:0"
   },
   "legacyAST": {
-    "absolutePath": "/Users/bear2u/Desktop/workspaces/erc20_token_react/contracts/CustomToken.sol",
+    "absolutePath": "/home/roha/문서/workspace_dapp/contracts/CustomToken.sol",
     "exportedSymbols": {
       "CustomToken": [
         339
@@ -8649,9 +8649,9 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.23+commit.124ca40d.Emscripten.clang"
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-05-30T11:54:00.083Z"
+  "updatedAt": "2018-06-05T23:30:30.848Z"
 }

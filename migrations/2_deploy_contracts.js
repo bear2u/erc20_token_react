@@ -1,4 +1,4 @@
-var Customtoken = artifacts.require("./Customtoken.sol");
+var Customtoken = artifacts.require("./CustomToken");
 
 module.exports = function(deployer) {
   deployer.deploy(Customtoken);
