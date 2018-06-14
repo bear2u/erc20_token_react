@@ -1,6 +1,6 @@
-// var HDWalletProvider = require("truffle-hdwallet-provider");
+var HDWalletProvider = require("truffle-hdwallet-provider");
 
-// var mnemonic = "art include push idle erosion switch kingdom switch device hamster expose craft";
+var mnemonic = "art include push idle erosion switch kingdom switch device hamster expose craft";
 
 module.exports = {
   networks: {
@@ -13,10 +13,12 @@ module.exports = {
       host: "127.0.0.1",
       port: 7545,
       network_id: "*" // Match any network id
+    },
+    rinkinby: {
+      provider: function() {
+        return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/xGlnGk9peqAXEcBDjROC")
+      },
+      network_id: 4
     }
-    // ganache2: {
-    //   provider: new HDWalletProvider(mnemonic, "http://127.0.0.1:7545"),
-    //   network_id: "*"
-    // }
   }
 };

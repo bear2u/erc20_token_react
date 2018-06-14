@@ -8740,13 +8740,13 @@
     "version": "0.4.24+commit.e67f0147.Emscripten.clang"
   },
   "networks": {
-    "5777": {
+    "4": {
       "events": {},
       "links": {},
       "address": "0xdbb934a4a69d266f6e4cb86153854c54aca6cad6",
-      "transactionHash": "0xc4a4b40a059b6e3d3fb3cefe00666c9818db5408c5dc4d81c9fdf659116bbb9f"
+      "transactionHash": "0x378bb59a71c02405f1545e552a4471dae8a4de804833e622be51a1929edab5de"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-06-14T12:21:34.878Z"
+  "updatedAt": "2018-06-14T12:44:56.756Z"
 }
